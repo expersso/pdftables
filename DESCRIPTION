@@ -2,7 +2,7 @@ Package: pdftables
 Type: Package
 Title: Programmatic Conversion of PDF Tables
 Version: 0.1
-Date: 2016-02-09
+Date: 2016-02-10
 Authors@R: person("Eric", "Persson", email = "expersso5@gmail.com",
     role = c("aut", "cre"))
 Description: Allows the user to convert PDF tables to formats more amenable to
@@ -10,7 +10,8 @@ Description: Allows the user to convert PDF tables to formats more amenable to
 License: CC0
 URL: https://www.github.com/expersso/pdftables , https://pdftables.com
 BugReports: https://www.github.com/expersso/pdftables/issues
-Imports: httr
+Imports: httr,
+    tools
 VignetteBuilder: knitr
 Suggests: knitr,
     rmarkdown

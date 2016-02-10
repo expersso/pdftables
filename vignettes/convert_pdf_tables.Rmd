@@ -16,11 +16,13 @@ knitr::opts_chunk$set(cache = FALSE, warning = FALSE, error = FALSE,
 
 ### Introduction
 
-The `pdftables` package allows the user to convert PDF tables to formats more amenable to analysis (csv, XLM, or XLSX) by wrapping the [PDFTables API](https://pdftables.com)
+The `pdftables` package allows the user to convert PDF tables to formats more
+amenable to analysis (csv, XLM, or XLSX) by wrapping the 
+[PDFTables API](https://pdftables.com).
 
 The package can be installed from either CRAN or Github (development version):
 
-```{r install, eval=FALSE}
+```{r install}
 # From CRAN
 install.packages("pdftables")
 
@@ -37,45 +39,33 @@ free package that allows up to 50 pages).
 
 ### Usage Example
 
-In the following example we first write the `iris` dataset to a `.csv` file. We
-then open that file and print it as a `.pdf` file (which spans three A4 pages).
-Using the `get_table` function we then upload that PDF to the 
-[PDFTables API](https://pdftables.com) which parses and returns the extracted 
-data as a `raw` vector. Finally, we write the result to a new `.xlsx` file which 
-we can open in Excel.
+In the following example we first write the `iris` dataset to a `.csv` file. We 
+then open that file and print it as a `.pdf` file. Using the `convert_pdf`
+function we then upload that PDF to the [PDFTables API](https://pdftables.com)
+which parses and returns the converted file as `test2.csv`.
 
 (Note: All functions in the package require that you provide your api key in the
 `api_key` argument. By default this looks for an environment variable called
 `pdftable_api`, but you can also provide it directly.)
 
 ```{r}
-write.csv(iris, file = "test.csv", row.names = FALSE)
+write.csv(head(iris, 20), file = "test.csv", row.names = FALSE)
 
-# Open test.csv and print as PDF
+# Open test.csv and print as PDF to "test.pdf"
 
-test_xlsx <- get_table(file = "test.pdf", format = "xlsx-multiple")
-
-f <- file("test.xlsx", "wb")
-writeBin(test_xlsx, f)
-close(f)
-```
-
-The next example follows the same logic, only this time we specify the format to
-be `csv`, which returns a comma-separated string. We then write this to a `.csv`
-file.
-
-```{r}
-test_csv <- get_table(file = "test.pdf", format = "csv")
-
-f <- file("test_retrieved.csv", "w")
-write(test_csv, f)
-close.connection(f)
+convert_pdf("test.pdf", "test2.csv")
+# Converted test.pdf to test2.csv
 ```
 
 ![](example.png)
 
-Note that the conversion is rarely recovers the underlying data exactly, so you
-may have to open the retrieved file and make some manual corrections.
+If the `output_file` argument is omitted, the name of the output file will be
+the same as the input file, but with the right file extension.
+
+The package (and API) supports converting PDFs to `.csv`, `.xml`, and `.xlsx`.
+
+Note that the conversion sometimes fails to recover the underlying data exactly,
+so you may have to open the retrieved file and make some manual corrections.
 
 The `get_remaining` function shows you how many pages you have remaining.
 
