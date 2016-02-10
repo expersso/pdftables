@@ -34,7 +34,7 @@ library(pdftables)
 ```
 
 To use the package the user first needs to sign up to the 
-[PDFTables API](https://pdftables.com/join) to get an API token (they offer a 
+[PDFTables API](https://pdftables.com) to get an API token (they offer a 
 free package that allows up to 50 pages).
 
 ### Usage Example

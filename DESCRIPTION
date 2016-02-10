@@ -6,7 +6,7 @@ Date: 2016-02-10
 Authors@R: person("Eric", "Persson", email = "expersso5@gmail.com",
     role = c("aut", "cre"))
 Description: Allows the user to convert PDF tables to formats more amenable to
-  analysis (csv, XLM, or XLSX) by wrapping the PDFTables API.
+  analysis (CSV, XLM, or XLSX) by wrapping the PDFTables API.
 License: CC0
 URL: https://www.github.com/expersso/pdftables , https://pdftables.com
 BugReports: https://www.github.com/expersso/pdftables/issues
