@@ -17,7 +17,7 @@ get_remaining <- function(api_key = Sys.getenv("pdftable_api")) {
   as.numeric(httr::content(response, "text", encoding = "UTF-8"))
 }
 
-get_content <- function(input_file, format = format, api_key = api_key) {
+get_content <- function(input_file, format, api_key) {
 
   response <- httr::POST("https://pdftables.com/api",
                          query = list(key = api_key, format = format),
@@ -46,42 +46,42 @@ get_content <- function(input_file, format = format, api_key = api_key) {
 #' convert_pdf("test.pdf", "test2.csv")
 #' }
 convert_pdf <- function(input_file, output_file = NULL, format = "csv",
-                      message = TRUE, api_key = Sys.getenv("pdftable_api")) {
+                        message = TRUE, api_key = Sys.getenv("pdftable_api")) {
 
   stopifnot(file.exists(input_file))
+
+  format <- tolower(format)
 
   if(!format %in% c("csv", "xml", "xlsx-single", "xlsx-multiple")) {
     stop("format has to be one of 'csv', 'xlm', 'xlsx-single', 'xlsx-multiple'")
   }
 
+  # If output_file is null, create file with same name as input file but
+  # different file extension
   if(is.null(output_file)) {
 
     base <- tools::file_path_sans_ext(tools::file_path_as_absolute(input_file))
 
-    file_ext <- switch(format,
-                       "csv" = "csv",
-                       "xml" = "xml",
-                       "xlsx-single" = "xlsx",
-                       "xlsx-multiple" = "xlsx")
+    file_ext <- regmatches(format, regexpr("[a-z]+", format))
 
     output_file <- paste(base, file_ext, sep = ".")
   }
 
-  content <- get_content(input_file, format = format, api_key = api_key)
+  # Send input file to PDFTables and return content
+  content <- get_content(input_file, format, api_key)
 
+  # Write content to file
   if(format %in% c("xlsx-single", "xlsx-multiple")) {
     f <- file(output_file, "wb")
     writeBin(content, f)
-    close.connection(f)
   }
 
   if(format %in% c("csv", "xml")) {
     f <- file(output_file, "w")
     write(content, f)
-    close.connection(f)
   }
 
-  if(message) {
-    message("Converted ", input_file, " to ", output_file)
-  }
+  if(message) message("Converted ", input_file, " to ", output_file)
+
+  close.connection(f)
 }
