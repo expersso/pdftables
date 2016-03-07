@@ -48,6 +48,13 @@ get_content <- function(input_file, format, api_key) {
 convert_pdf <- function(input_file, output_file = NULL, format = "csv",
                         message = TRUE, api_key = Sys.getenv("pdftable_api")) {
 
+  if (grepl("^http://|^https://|^ftp://|^file://",input_file)){
+    tmp <- tempfile(fileext = ".pdf")
+    download.file(url = input_file,destfile = tmp)
+    input_file <- tmp
+    on.exit(file.remove(tmp))
+  }
+
   stopifnot(file.exists(input_file))
 
   format <- tolower(format)
