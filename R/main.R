@@ -28,7 +28,11 @@ get_content <- function(input_file, format, api_key) {
 
 #' Convert PDF Tables to format more amenable to analysis
 #'
-#' @param input_file The PDF file to be converted
+#' @param input_file The PDF file to be converted. If this is a url
+#' to a PDF rather than a file path then it is downloaded to a
+#' temporary file via \code{download.file} before being sent to pdftables
+#' for conversion. If \code{input_file} is a url then \code{output_file}
+#' must not be \code{NULL}.
 #' @param output_file The desired name for the output file
 #' @param format One of 'csv', 'xlm', 'xlsx-single', 'xlsx-multiple'
 #' @param message If TRUE, outputs a message that conversion was successful
@@ -47,6 +51,17 @@ get_content <- function(input_file, format, api_key) {
 #' }
 convert_pdf <- function(input_file, output_file = NULL, format = "csv",
                         message = TRUE, api_key = Sys.getenv("pdftable_api")) {
+
+  if (grepl("^http://|^https://|^ftp://|^file://",input_file)){
+    stopifnot(!is.null(output_file))
+    tmp <- tempfile(fileext = ".pdf")
+    download_check <- download.file(url = input_file,destfile = tmp)
+    if (download_check != 0){
+      stop("PDF download failed.")
+    }
+    input_file <- tmp
+    on.exit(file.remove(tmp))
+  }
 
   stopifnot(file.exists(input_file))
 

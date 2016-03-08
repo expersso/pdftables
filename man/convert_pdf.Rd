@@ -8,7 +8,11 @@ convert_pdf(input_file, output_file = NULL, format = "csv",
   message = TRUE, api_key = Sys.getenv("pdftable_api"))
 }
 \arguments{
-\item{input_file}{The PDF file to be converted}
+\item{input_file}{The PDF file to be converted. If this is a url
+to a PDF rather than a file path then it is downloaded to a
+temporary file via \code{download.file} before being sent to pdftables
+for conversion. If \code{input_file} is a url then \code{output_file}
+must not be \code{NULL}.}
 
 \item{output_file}{The desired name for the output file}
 
