@@ -34,7 +34,7 @@ get_content <- function(input_file, format, api_key) {
 #' for conversion. If \code{input_file} is a url then \code{output_file}
 #' must not be \code{NULL}.
 #' @param output_file The desired name for the output file
-#' @param format One of 'csv', 'xlm', 'xlsx-single', 'xlsx-multiple'
+#' @param format One of 'csv', 'xml', 'xlsx-single', 'xlsx-multiple'
 #' @param message If TRUE, outputs a message that conversion was successful
 #' @param api_key Your API key (from https://pdftables.com)
 #'
@@ -68,7 +68,7 @@ convert_pdf <- function(input_file, output_file = NULL, format = "csv",
   format <- tolower(format)
 
   if(!format %in% c("csv", "xml", "xlsx-single", "xlsx-multiple")) {
-    stop("format has to be one of 'csv', 'xlm', 'xlsx-single', 'xlsx-multiple'")
+    stop("format has to be one of 'csv', 'xml', 'xlsx-single', 'xlsx-multiple'")
   }
 
   # If output_file is null, create file with same name as input file but

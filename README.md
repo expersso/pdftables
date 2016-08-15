@@ -5,7 +5,7 @@ pdftables
 
 ### Introduction
 
-The `pdftables` package allows the user to convert PDF tables to formats more amenable to analysis (csv, XLM, or XLSX) by wrapping the [PDFTables API](https://pdftables.com).
+The `pdftables` package allows the user to convert PDF tables to formats more amenable to analysis (csv, XML, or XLSX) by wrapping the [PDFTables API](https://pdftables.com).
 
 The package can be installed from either CRAN or Github (development version):
 
