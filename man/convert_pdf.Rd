@@ -16,7 +16,7 @@ must not be \code{NULL}.}
 
 \item{output_file}{The desired name for the output file}
 
-\item{format}{One of 'csv', 'xlm', 'xlsx-single', 'xlsx-multiple'}
+\item{format}{One of 'csv', 'xml', 'xlsx-single', 'xlsx-multiple'}
 
 \item{message}{If TRUE, outputs a message that conversion was successful}
 
